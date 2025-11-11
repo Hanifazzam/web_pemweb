@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Menu - Cafe AL</title>
+  <link rel="stylesheet" href="../assets/css/tambah_menu.css">
+</head>
+<body>
+  <div class="form-wrap">
+    <h1>Tambah Menu Baru</h1>
+    <p class="subtitle">Lengkapi form berikut untuk menambahkan menu baru</p>
+
+    <form action="../../backend/admin/tambah_menu.php" method="POST" enctype="multipart/form-data" id="menuForm">
+      <div class="form-row">
+        <div class="col">
+          <label>Nama Menu</label>
+          <input type="text" name="nama_menu" placeholder="Contoh: Cappuccino" required>
+        </div>
+        <div class="col">
+          <label>Harga</label>
+          <input type="number" name="harga" placeholder="25000" required min="0">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col">
+          <label>Deskripsi</label>
+          <textarea name="deskripsi" placeholder="Tuliskan deskripsi menu yang menggugah selera..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col">
+          <label>Gambar Menu</label>
+          <input type="file" name="gambar" accept="image/*" required id="fileInput">
+          <div class="file-preview" id="preview"></div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Simpan Menu</button>
+        <a href="data_menu.php" class="btn-secondary">Kembali</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Preview gambar sebelum upload
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      const preview = document.getElementById('preview');
+      
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+        }
+        reader.readAsDataURL(file);
+      } else {
+        preview.innerHTML = '';
+      }
+    });
+
+    // Validasi form
+    document.getElementById('menuForm').addEventListener('submit', function(e) {
+      const nama = document.querySelector('input[name="nama_menu"]').value;
+      const harga = document.querySelector('input[name="harga"]').value;
+      
+      if (!nama.trim()) {
+        alert('Nama menu tidak boleh kosong!');
+        e.preventDefault();
+        return;
+      }
+      
+      if (harga <= 0) {
+        alert('Harga harus lebih dari 0!');
+        e.preventDefault();
+        return;
+      }
+    });
+  </script>
+</body>
+</html>

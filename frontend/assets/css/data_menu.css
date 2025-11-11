@@ -1,0 +1,237 @@
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f0e8 0%, #e8dcc8 100%);
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      color: #3d2517;
+      font-size: 36px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    h1::before {
+      content: '🍽️';
+      font-size: 40px;
+    }
+
+    .subtitle {
+      color: #8b6f47;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .add-row {
+      margin-bottom: 30px;
+    }
+
+    .add-row a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 30px;
+      background: linear-gradient(135deg, #8b4513 0%, #a0522d 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+      transition: all 0.3s;
+    }
+
+    .add-row a::before {
+      content: '➕';
+      font-size: 18px;
+    }
+
+    .add-row a:hover {
+      background: linear-gradient(135deg, #a0522d 0%, #8b4513 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+    }
+
+    .table-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      border-top: 4px solid #8b4513;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: linear-gradient(135deg, #3d2517 0%, #2c1810 100%);
+    }
+
+    thead th {
+      padding: 20px 15px;
+      text-align: left;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #f0e8dc;
+      transition: all 0.3s;
+    }
+
+    tbody tr:hover {
+      background: #faf8f5;
+      transform: scale(1.01);
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody td {
+      padding: 20px 15px;
+      color: #3d2517;
+      font-size: 14px;
+    }
+
+    tbody td img {
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      object-fit: cover;
+      height: 80px;
+      transition: transform 0.3s;
+    }
+
+    tbody td img:hover {
+      transform: scale(1.5);
+      z-index: 10;
+      position: relative;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-edit, .btn-delete {
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-edit {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    }
+
+    .btn-edit:hover {
+      background: linear-gradient(135deg, #45a049, #4CAF50);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    }
+
+    .btn-edit::before {
+      content: '✏️';
+    }
+
+    .btn-delete {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      color: white;
+      box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+    }
+
+    .btn-delete:hover {
+      background: linear-gradient(135deg, #d32f2f, #f44336);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(244, 67, 54, 0.4);
+    }
+
+    .btn-delete::before {
+      content: '🗑️';
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #8b6f47;
+    }
+
+    .empty-state::before {
+      content: '📭';
+      font-size: 80px;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 1200px) {
+      .table-card {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 800px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px 15px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .add-row a {
+        width: 100%;
+        justify-content: center;
+      }
+
+      thead th {
+        padding: 15px 10px;
+        font-size: 12px;
+      }
+
+      tbody td {
+        padding: 15px 10px;
+        font-size: 13px;
+      }
+
+      .actions {
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .btn-edit, .btn-delete {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+    }
