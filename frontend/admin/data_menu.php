@@ -28,7 +28,7 @@ if (!$result) {
     <p class="subtitle">Kelola menu cafe Anda dengan mudah</p>
 
     <div class="add-row">
-      <a href="tambah_menu.html">Tambah Menu</a>
+      <a href="tambah_menu.php">Tambah Menu</a>
     </div>
 
     <div class="table-card">

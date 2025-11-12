@@ -1,6 +1,6 @@
 <?php
 error_reporting(E_ALL);
-ini_set('display_errors', 1); // ✅ tampilkan error di browser
+ini_set('display_errors', 1); // tampilkan error (dev)
 
 include '../koneksi/koneksi.php';
 header('Content-Type: application/json');
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $result = mysqli_query($conn, $query);
 
-  // Tambahkan debug
+  // debug query
   if (!$result) {
     echo json_encode(['status' => 'error', 'message' => 'Query gagal: ' . mysqli_error($conn)]);
     exit;

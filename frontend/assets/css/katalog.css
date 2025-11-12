@@ -1,0 +1,337 @@
+/* File: ../assets/css/katalog.css */
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body { 
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5e6d3 0%, #d7ccc8 100%);
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(139, 69, 19, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(101, 67, 33, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+    color: #5d4037;
+    font-size: 2.5em;
+    margin: 30px 0 50px 0;
+    font-weight: 700;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #8B4513, transparent);
+}
+
+#cart {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    background: linear-gradient(135deg, #8B4513 0%, #6d4c41 100%);
+    color: white;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 8px 25px rgba(139, 69, 19, 0.4);
+    transition: all 0.3s;
+}
+
+#cart:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(139, 69, 19, 0.5);
+}
+
+#cart i {
+    font-size: 28px;
+}
+
+#cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    border: 3px solid white;
+}
+
+/* (BARU) Tombol Kategori (di sebelah keranjang) */
+#category-btn {
+    position: fixed;
+    top: 100px;
+    right: 120px; /* 30px (margin) + 70px (lebar keranjang) + 20px (jarak) */
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    color: #5d4037;
+    border: 3px solid #8B4513;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 8px 25px rgba(139, 69, 19, 0.3);
+    transition: all 0.3s;
+}
+
+#category-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 12px 35px rgba(139, 69, 19, 0.4);
+}
+
+#category-btn i {
+    font-size: 28px;
+}
+
+#cart-items {
+    /* (CSS ini tidak berubah) */
+    display: none;
+    position: fixed;
+    top: 180px;
+    right: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    padding: 20px;
+    min-width: 280px;
+    max-width: 350px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 999;
+}
+
+#cart-items h4 {
+    color: #5d4037;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+    border-bottom: 2px solid #efebe9;
+    padding-bottom: 10px;
+}
+
+#cart-list {
+    list-style: none;
+    padding: 0;
+}
+
+#cart-list li {
+    padding: 10px;
+    background: #fafafa;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    color: #5d4037;
+    font-size: 0.9em;
+}
+
+/* (BARU) Dropdown Kategori Vertikal */
+#category-dropdown {
+    display: none;
+    position: fixed;
+    top: 180px;
+    right: 120px; /* Sejajar dengan tombolnya */
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    padding: 20px;
+    min-width: 220px;
+    z-index: 998; /* Di bawah cart items tapi di atas page */
+}
+
+#category-dropdown h4 {
+    color: #5d4037;
+    margin-bottom: 15px;
+    font-family: 'Playfair Display', serif;
+    border-bottom: 2px solid #efebe9;
+    padding-bottom: 10px;
+}
+
+#category-list {
+    list-style: none;
+    padding: 0;
+}
+
+#category-list li a {
+    display: block;
+    padding: 10px;
+    background: #fafafa;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    color: #5d4037;
+    font-size: 0.9em;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s;
+    font-weight: 500;
+}
+
+#category-list li a:hover {
+    background: #8B4513;
+    color: white;
+}
+
+
+/* (DIHAPUS) Semua CSS .radial-menu, .main-btn, .menu-item sudah dihapus */
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(139, 69, 19, 0.2);
+}
+
+.card.hidden {
+    display: none;
+}
+
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4em;
+    font-weight: 600;
+    color: #5d4037;
+    margin-bottom: 10px;
+}
+
+.card-desc {
+    color: #795548;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.card-price {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: #8B4513;
+    margin-bottom: 20px;
+    font-family: 'Playfair Display', serif;
+}
+
+.card button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #8B4513 0%, #6d4c41 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Poppins', sans-serif;
+}
+
+.card button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+
+    #cart {
+        width: 60px;
+        height: 60px;
+        right: 20px;
+        top: 90px;
+    }
+    
+    /* (BARU) Atur ulang posisi tombol kategori di mobile */
+    #category-btn {
+        width: 60px;
+        height: 60px;
+        right: 90px; /* 20px margin + 60px cart + 10px space */
+        top: 90px;
+    }
+
+    #cart i, #category-btn i {
+        font-size: 24px;
+    }
+    
+    /* (BARU) Atur ulang posisi dropdown di mobile */
+    #cart-items {
+        top: 160px;
+        right: 20px;
+    }
+    #category-dropdown {
+        top: 160px;
+        right: 90px;
+    }
+
+    /* (DIHAPUS) .radial-menu media query sudah dihapus */
+
+    h2 {
+        font-size: 2em;
+    }
+
+    
+}

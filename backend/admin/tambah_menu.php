@@ -1,44 +1,66 @@
 <?php
 include '../koneksi/koneksi.php';
 
-// Pastikan form dikirim via POST
+// cek POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // ambil input
     $nama = $_POST['nama_menu'];
     $harga = $_POST['harga'];
     $deskripsi = $_POST['deskripsi'];
+    $id_kategori = $_POST['id_kategori'];
 
-    // Folder tempat menyimpan gambar
-    $target_dir = "../../frontend/assets/images/";
-    if (!file_exists($target_dir)) {
-        mkdir($target_dir, 0777, true);
-    }
+    // upload gambar
+    $file_name = ''; // Inisialisasi
+    if (isset($_FILES["gambar"]) && $_FILES["gambar"]["error"] == 0) {
+        $target_dir = "../../frontend/assets/images/";
+        if (!file_exists($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
 
-    $file_name = basename($_FILES["gambar"]["name"]);
-    $target_file = $target_dir . $file_name;
-    $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+        $file_name = basename($_FILES["gambar"]["name"]);
+        $target_file = $target_dir . $file_name;
+        $file_type = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
-    // Validasi file
-    $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
-    if (!in_array($file_type, $allowed_types)) {
-        echo "<script>alert('Hanya file gambar (JPG, JPEG, PNG, GIF) yang diperbolehkan!'); history.back();</script>";
+        $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+        if (!in_array($file_type, $allowed_types)) {
+            echo "<script>alert('Hanya file gambar (JPG, JPEG, PNG, GIF) yang diperbolehkan!'); history.back();</script>";
+            exit;
+        }
+
+        if (!move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file)) {
+            echo "<script>alert('Gagal mengupload gambar!'); history.back();</script>";
+            exit;
+        }
+    } else {
+        echo "<script>alert('Error: Gambar tidak ditemukan atau gagal diupload.'); history.back();</script>";
         exit;
     }
 
-    // Pindahkan file ke folder tujuan
-    if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file)) {
-        // Simpan ke database
-        $gambar = $file_name;
-        $query = "INSERT INTO menu (nama_menu, harga, deskripsi, gambar)
-                  VALUES ('$nama', '$harga', '$deskripsi', '$gambar')";
-        if (mysqli_query($conn, $query)) {
-            echo "<script>alert('Menu berhasil ditambahkan!'); window.location.href='../../frontend/admin/data_menu.html';</script>";
-        } else {
-            echo "<script>alert('Gagal menyimpan ke database: " . mysqli_error($conn) . "'); history.back();</script>";
-        }
-    } else {
-        echo "<script>alert('Gagal mengupload gambar!'); history.back();</script>";
+    // simpan ke DB (prepared)
+    $query = "INSERT INTO menu (nama_menu, harga, deskripsi, gambar, id_kategori)
+              VALUES (?, ?, ?, ?, ?)";
+
+    $stmt = mysqli_prepare($conn, $query);
+    if (!$stmt) {
+        echo "<script>alert('Gagal menyiapkan statement: " . mysqli_error($conn) . "'); history.back();</script>";
+        exit;
     }
+
+    // tipe params: s = string, d = double, i = int
+    mysqli_stmt_bind_param($stmt, "sdssi", $nama, $harga, $deskripsi, $file_name, $id_kategori);
+
+    if (mysqli_stmt_execute($stmt)) {
+        echo "<script>alert('Menu berhasil ditambahkan!'); window.location.href='../../frontend/admin/data_menu.php';</script>";
+    } else {
+        echo "<script>alert('Gagal menyimpan ke database: " . mysqli_stmt_error($stmt) . "'); history.back();</script>";
+    }
+
+    mysqli_stmt_close($stmt);
+
 } else {
     echo "<script>alert('Metode tidak valid!'); history.back();</script>";
 }
+
+// tutup koneksi
+mysqli_close($conn);
 ?>

@@ -2,7 +2,7 @@
 include '../koneksi/koneksi.php';
 header('Content-Type: application/json');
 
-// aktifkan debug sementara
+// tampilkan error (dev)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -13,14 +13,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role_id = 2; // default: pembeli
 
-    // cek email sudah ada belum
+    // cek email
     $cek = mysqli_query($conn, "SELECT * FROM user WHERE email='$email'");
     if (mysqli_num_rows($cek) > 0) {
         echo json_encode(['status' => 'error', 'message' => 'Email sudah terdaftar!']);
         exit;
     }
 
-    // simpan ke database
+    // simpan
     $query = "INSERT INTO user (nama, email, no_hp, password, role_id)
               VALUES ('$nama', '$email', '$no_hp', '$password', '$role_id')";
 

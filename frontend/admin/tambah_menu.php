@@ -1,3 +1,11 @@
+<?php
+include '../../backend/koneksi/koneksi.php';
+
+// Ambil semua kategori untuk dropdown
+$query_kategori = "SELECT * FROM kategori ORDER BY nama_kategori ASC";
+$result_kategori = mysqli_query($conn, $query_kategori);
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -12,6 +20,7 @@
     <p class="subtitle">Lengkapi form berikut untuk menambahkan menu baru</p>
 
     <form action="../../backend/admin/tambah_menu.php" method="POST" enctype="multipart/form-data" id="menuForm">
+      
       <div class="form-row">
         <div class="col">
           <label>Nama Menu</label>
@@ -23,6 +32,26 @@
         </div>
       </div>
 
+      <div class="form-row">
+        <div class="col">
+          <label>Kategori</label>
+          <select name="id_kategori" id="id_kategori" required>
+            <option value="" disabled selected>-- Pilih Kategori --</option>
+            <?php
+            // Loop melalui hasil kueri kategori dan buat <option>
+            if (mysqli_num_rows($result_kategori) > 0) {
+                while ($kategori = mysqli_fetch_assoc($result_kategori)) {
+                    echo '<option value="' . $kategori['id_kategori'] . '">' 
+                       . htmlspecialchars($kategori['nama_kategori']) 
+                       . '</option>';
+                }
+            } else {
+                echo '<option value="" disabled>Belum ada kategori</option>';
+            }
+            ?>
+          </select>
+        </div>
+      </div>
       <div class="form-row">
         <div class="col">
           <label>Deskripsi</label>
@@ -62,11 +91,14 @@
       }
     });
 
-    // Validasi form
+    // Validasi form (DIPERBARUI)
     document.getElementById('menuForm').addEventListener('submit', function(e) {
       const nama = document.querySelector('input[name="nama_menu"]').value;
       const harga = document.querySelector('input[name="harga"]').value;
       
+      // (BARU) Ambil nilai kategori
+      const kategori = document.getElementById('id_kategori').value;
+
       if (!nama.trim()) {
         alert('Nama menu tidak boleh kosong!');
         e.preventDefault();
@@ -75,6 +107,13 @@
       
       if (harga <= 0) {
         alert('Harga harus lebih dari 0!');
+        e.preventDefault();
+        return;
+      }
+
+      // (BARU) Validasi kategori
+      if (!kategori) { // Cek jika nilainya masih "" (kosong)
+        alert('Anda harus memilih kategori!');
         e.preventDefault();
         return;
       }
