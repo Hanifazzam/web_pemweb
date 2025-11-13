@@ -45,54 +45,44 @@
   <script>
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const formData = new FormData(e.target);
       const msgEl = document.getElementById('msg');
-
+        
       try {
         const response = await fetch('../../backend/auth/login.php', {
           method: 'POST',
           body: formData
         });
-
-        // tangani HTTP error
-        if (!response.ok) {
+      
+        if(!response.ok){
           const text = await response.text();
           console.error('Server response not OK:', response.status, text);
-          msgEl.className = 'error show';
-          msgEl.textContent = 'Terjadi kesalahan pada server (HTTP ' + response.status + '). Cek console atau hubungi admin.';
+          msgEl.className='error show';
+          msgEl.textContent='Terjadi kesalahan server';
           return;
         }
-
+      
         const result = await response.json();
-
-        if (result.status === 'success') {
-          msgEl.className = 'success show';
-          msgEl.textContent = result.message;
-          msgEl.style.background = '#d4edda';
-          msgEl.style.color = '#155724';
-          msgEl.style.border = '1px solid #c3e6cb';
-
+      
+        if(result.status === 'success'){
+          msgEl.className='success show';
+          msgEl.textContent=result.message;
+        
           // redirect sesuai role
-          setTimeout(() => {
-            if (result.role === 'admin') {
-              window.location.href = '../admin/dashboard.php';
-            } else if (result.role === 'pembeli') {
-              window.location.href = '../pembeli/katalog.PHP';
-            } else if (result.role === 'kurir') {
-              window.location.href = '../kurir/pesanan_masuk.html';
-            } else if (result.role === 'kasir') {
-              window.location.href = '../kasir/kasir.php';
-            }
-          }, 1000);
+          setTimeout(()=>{
+            if(result.role==='admin') window.location.href='../admin/dashboard_admin.html';
+            else if(result.role==='pembeli') window.location.href='../pembeli/katalog.PHP';
+            else if(result.role==='kurir') window.location.href='../kurir/pesanan_masuk.html';
+            else if(result.role==='kasir') window.location.href='../kasir/kasir.php';
+          }, 500);
         } else {
-          msgEl.className = 'error show';
-          msgEl.textContent = result.message;
+          msgEl.className='error show';
+          msgEl.textContent=result.message;
         }
-      } catch (error) {
-        msgEl.className = 'error show';
-        msgEl.textContent = 'Terjadi kesalahan koneksi ke server! Lihat console untuk detail.';
+      } catch(error){
         console.error('Fetch error:', error);
+        msgEl.className='error show';
+        msgEl.textContent='Terjadi kesalahan koneksi ke server!';
       }
     });
   </script>

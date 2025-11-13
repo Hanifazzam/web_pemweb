@@ -1,10 +1,5 @@
 <?php 
 session_start();
-// Cek jika belum login, tendang ke halaman login
-// if (!isset($_SESSION['id_user'])) {
-//     header('Location: login.php'); // (Sesuaikan dengan halaman login Anda)
-//     exit;
-// }
 include 'navbar.html'; 
 ?>
 <!DOCTYPE html>
@@ -12,76 +7,9 @@ include 'navbar.html';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/status_pesanan.css">
     <title>Lacak Pesanan Saya</title>
     <link rel="stylesheet" href="../assets/css/pembeli_navbar.css">
-    <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: 20px auto; }
-        h1 { text-align: center; }
-
-        .order-card {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            overflow: hidden; /* Penting untuk status bar */
-        }
-        
-        /* Garis status di atas kartu */
-        .status-bar {
-            padding: 4px;
-            color: white;
-            font-weight: bold;
-            text-align: center;
-            font-size: 0.8em;
-            text-transform: uppercase;
-        }
-        .status-pending { background-color: #ffc107; color: #333; } /* Oranye */
-        .status-proses { background-color: #007bff; } /* Biru */
-        .status-ready { background-color: #28a745; } /* Hijau */
-
-        .order-content { padding: 20px; }
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-        .order-header h3 { margin: 0; }
-        .order-header span { font-weight: bold; font-size: 1.1em; }
-        
-        .order-items-list {
-            list-style: none; padding: 0; margin-top: 10px;
-            display: none; /* Sembunyi by default */
-        }
-        .order-items-list li {
-            background: #f9f9f9;
-            padding: 8px 12px;
-            border-radius: 4px;
-            margin-bottom: 5px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .btn-toggle-detail {
-            background: none; border: 1px solid #ccc;
-            padding: 5px 10px; border-radius: 5px; cursor: pointer;
-            font-size: 0.9em;
-        }
-        .loading, .no-orders { text-align: center; padding: 30px; color: #777; font-size: 1.2em; }
-
-        /* (BARU) Animasi Notifikasi */
-        @keyframes highlight-ready {
-            0% { background-color: #28a745; box-shadow: 0 0 15px #28a745; }
-            50% { background-color: #34ce57; box-shadow: 0 0 30px #34ce57; }
-            100% { background-color: #28a745; box-shadow: 0 0 15px #28a745; }
-        }
-        .status-ready.notify {
-            animation: highlight-ready 1.5s ease-in-out;
-        }
-
-    </style>
 </head>
 <body>
     <div class="container">

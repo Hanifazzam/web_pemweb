@@ -249,3 +249,165 @@
         width: 100%;
       }
     }
+
+    /* CSS khusus untuk kolom kategori dan dropdown */
+
+/* Label Kategori */
+.col:has(select) label::before {
+  content: '☕';
+  font-size: 16px;
+}
+
+/* Select Dropdown Styling */
+select {
+  padding: 14px 45px 14px 18px;
+  border: 2px solid #e0d5c7;
+  border-radius: 12px;
+  font-size: 15px;
+  font-family: inherit;
+  background: #faf8f5;
+  color: #3d2517;
+  cursor: pointer;
+  transition: all 0.3s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  
+  /* Custom Arrow dengan SVG */
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b4513' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 20px;
+}
+
+/* Hover Effect */
+select:hover {
+  border-color: #8b4513;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
+}
+
+/* Focus Effect */
+select:focus {
+  outline: none;
+  border-color: #8b4513;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Style untuk placeholder option (option pertama yang disabled) */
+select option[value=""][disabled] {
+  color: #8b6f47;
+  font-style: italic;
+}
+
+/* Style untuk option yang aktif */
+select option {
+  padding: 12px;
+  background: white;
+  color: #3d2517;
+  font-size: 15px;
+}
+
+/* Hover pada option (terbatas support browser) */
+select option:hover {
+  background: linear-gradient(135deg, #faf8f5 0%, #f5f0e8 100%);
+}
+
+/* Option yang di-disabled */
+select option:disabled {
+  color: #b8a38f;
+  font-style: italic;
+  background: #f9f9f9;
+}
+
+/* State ketika belum memilih (invalid) */
+select:invalid {
+  color: #8b6f47;
+}
+
+/* State setelah memilih (valid) */
+select:valid {
+  color: #3d2517;
+}
+
+/* Disabled State */
+select:disabled {
+  background-color: #f0ebe3;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Error State (untuk validasi) */
+select.error {
+  border-color: #dc3545;
+  background-color: #fff5f5;
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.15);
+}
+
+/* Success State (untuk validasi) */
+select.success {
+  border-color: #28a745;
+  background-color: #f0fff4;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.15);
+}
+
+/* Animasi ketika focus */
+@keyframes selectPulse {
+  0% {
+    box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
+  }
+  50% {
+    box-shadow: 0 6px 16px rgba(139, 69, 19, 0.2);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
+  }
+}
+
+select:focus {
+  animation: selectPulse 1.5s ease-in-out;
+}
+
+/* Multiple Select (jika diperlukan di masa depan) */
+select[multiple] {
+  height: auto;
+  padding: 10px;
+  background-image: none;
+}
+
+select[multiple] option {
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  border-radius: 8px;
+}
+
+select[multiple] option:checked {
+  background: linear-gradient(135deg, #8b4513, #a0522d);
+  color: white;
+  font-weight: 600;
+}
+
+/* Loading State */
+select.loading {
+  position: relative;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238b4513' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3ccircle cx='12' cy='12' r='10'/%3e%3c/svg%3e");
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  select {
+    padding: 13px 40px 13px 16px;
+    font-size: 14px;
+    background-size: 18px;
+    background-position: right 12px center;
+  }
+  
+  select option {
+    font-size: 14px;
+  }
+}

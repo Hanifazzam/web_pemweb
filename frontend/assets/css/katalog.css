@@ -309,8 +309,8 @@ h2::after {
     #category-btn {
         width: 60px;
         height: 60px;
-        right: 90px; /* 20px margin + 60px cart + 10px space */
-        top: 90px;
+        right: 30px; /* 20px margin + 60px cart + 10px space */
+        top: 150px;
     }
 
     #cart i, #category-btn i {

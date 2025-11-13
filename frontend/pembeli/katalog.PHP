@@ -7,7 +7,6 @@
     <title>Katalog Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    
     <link rel="stylesheet" href="../assets/css/katalog.css">
 </head>
 <body>
@@ -40,15 +39,17 @@
     
     <div class="grid-container">
         <?php foreach($menu as $item): ?>
-        <div class="card" data-id-kategori="<?= htmlspecialchars($item['id_kategori']) ?>"> 
+        <div class="card" data-id-kategori="<?= htmlspecialchars($item['kategori']) ?>"> 
             <?php if(!empty($item['gambar'])): ?>
-            <img src="../assets/images/<?= $item['gambar'] ?>" alt="<?= $item['nama_menu'] ?>">
+            <img src="../../frontend/assets/images/<?= htmlspecialchars($item['gambar']) ?>" 
+                alt="<?= htmlspecialchars($item['nama_menu']) ?>" 
+                loading="lazy">
             <?php endif; ?>
             <div class="card-content">
                 <div class="card-title"><?= $item['nama_menu'] ?></div>
                 <div class="card-desc"><?= $item['deskripsi'] ?></div>
                 <div class="card-price">Rp <?= number_format($item['harga'],0,',','.') ?></div>
-                <button onclick="addToCart(<?= $item['id_menu'] ?>, '<?= htmlspecialchars($item['nama_menu'], ENT_QUOTES) ?>', <?= $item['harga'] ?>)">Pesan</button>
+                <button onclick="addToCart(<?= $item['id'] ?>, '<?= htmlspecialchars($item['nama_menu'], ENT_QUOTES) ?>', <?= $item['harga'] ?>)">Pesan</button>
             </div>
         </div>
         <?php endforeach; ?>

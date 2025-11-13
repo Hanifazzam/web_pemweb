@@ -1,6 +1,9 @@
 <?php
-// File: backend/kasir/kasir_api.php
-// (VERSI DIPERBARUI DENGAN FILTER STATUS)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+session_set_cookie_params(['path' => '/pemweb/']);
+session_start();
+
 
 include '../koneksi/koneksi.php';
 header('Content-Type: application/json');
@@ -71,21 +74,40 @@ function getOrderDetail($conn) {
         echo json_encode(['success' => false, 'message' => 'ID Pesanan tidak ada.']);
         return;
     }
+
     $order_id = $_GET['id'];
-    
-    $query = "SELECT * FROM order_item WHERE order_id = ?";
+
+    // ✅ Ganti query: join ke tabel menu untuk ambil nama menu
+    $query = "
+        SELECT 
+            oi.menu_id,
+            m.nama_menu,
+            oi.jumlah,
+            oi.subtotal
+        FROM order_item oi
+        JOIN menu m ON oi.menu_id = m.id
+        WHERE oi.order_id = ?
+    ";
+
     $stmt = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($stmt, 'i', $order_id);
     mysqli_stmt_execute($stmt);
-    
+
     $result = mysqli_stmt_get_result($stmt);
     $items = [];
     while ($row = mysqli_fetch_assoc($result)) {
-        $items[] = $row;
+        $items[] = [
+            'menu_id' => $row['menu_id'],
+            'nama_menu' => $row['nama_menu'], // ✅ Tambahkan nama menu
+            'qty' => $row['jumlah'],
+            'subtotal' => $row['subtotal']
+        ];
     }
+
     echo json_encode(['success' => true, 'items' => $items]);
     mysqli_stmt_close($stmt);
 }
+
 
 // (Fungsi ini tidak berubah)
 function updateOrderStatus($conn) {
